@@ -902,7 +902,7 @@ private:
     wasm.addFunction(func);
     // XXX for now, export all functions
     auto exp = allocator.alloc<Export>();
-    exp->name = exp->value = func->name;
+    exp->name = exp->value = func->name;sdsds
     wasm.addExport(exp);
   }
 
