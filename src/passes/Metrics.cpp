@@ -35,6 +35,16 @@ struct Metrics : public WalkerPass<WasmWalker<Metrics>> {
     auto name = getExpressionName(curr);
     counts[name]++;
   }
+  void visitSetLocal(SetLocal *curr) {
+    auto get = curr->value->dyn_cast<GetLocal>();
+    if (get) {
+      counts["set_get_local"]++;
+    }
+  }
+  void visitFunction(Function *curr) {
+    counts["functions"]++;
+    counts["locals"] += curr->locals.size();
+  }
   void finalize(PassRunner *runner, Module *module) override {
     ostream &o = cout;
     o << "Counts"
